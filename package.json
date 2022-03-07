@@ -1,0 +1,12 @@
+{
+  "name": "deemix-cli",
+  "version": "1",
+  "main": "src/index.js",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "chalk": "^5.0.0",
+    "deemix": "^3.6.7",
+    "inquirer": "^8.2.0"
+  }
+}
