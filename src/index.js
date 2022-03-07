@@ -29,9 +29,9 @@ if (!access || args[0] === 'setup') {
     );
   }
   await setup(dirName);
-} else {
-  config = JSON.parse(fs.readFileSync(dirName + '/config.json'));
 }
+
+config = JSON.parse(fs.readFileSync(dirName + '/config.json'));
 
 if (args[0] === 'setup') {
   process.exit();
