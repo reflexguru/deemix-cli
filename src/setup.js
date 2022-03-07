@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { TrackFormats } from 'deezer-js';
 
-export default async function setup() {
+export default async function setup(dirName) {
   const prompt = await inquirer.prompt([
     {
       type: 'input',
@@ -34,7 +34,7 @@ export default async function setup() {
     maxBitrate: TrackFormats[prompt.quality]
   };
 
-  fs.writeFileSync(path.resolve() + '/config.json', JSON.stringify(config), 'utf8');
+  fs.writeFileSync(dirName + '/config.json', JSON.stringify(config), 'utf8');
   console.log(`\n${ chalk.green('i') } Config has been saved in ${ chalk.magenta(path.resolve() + '/config.json') }\n`);
   console.log(`\n${ chalk.green('i') } If you want to configure this script more precisely, you can extend the freshly created config.json according to the documentation of the ${ chalk.green('deemix') } library.\n`);
 }
