@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import chalk from 'chalk';
 import path from 'path';
 import fs from 'fs';
@@ -34,10 +36,20 @@ if (args[0] === 'setup') {
 console.log(`${ chalk.green('i') } Logging in...`);
 await deezer.login_via_arl(config.arl);
 
+let ran = false
+
 for (const cmd of fs.readdirSync(path.resolve() + '/src/commands')) {
   const module = (await import(path.resolve() + '/src/commands/' + cmd)).default;
   if (module.aliases.includes(args[0])) {
     module.exec(args, deezer, config);
+    ran = true;
     break;
   }
+}
+
+if (!ran) {
+  console.log(
+    '\nNo valid command has been specified.\n' +
+    `Check available commands with ${ chalk.magenta(`deemix help`) }!`
+  );
 }

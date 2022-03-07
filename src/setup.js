@@ -35,6 +35,6 @@ export default async function setup() {
   };
 
   fs.writeFileSync(path.resolve() + '/config.json', JSON.stringify(config), 'utf8');
-
+  console.log(`\n${ chalk.green('i') } Config has been saved in ${ chalk.magenta(path.resolve() + '/config.json') }\n`);
   console.log(`\n${ chalk.green('i') } If you want to configure this script more precisely, you can extend the freshly created config.json according to the documentation of the ${ chalk.green('deemix') } library.\n`);
 }
