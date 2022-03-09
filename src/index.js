@@ -1,13 +1,21 @@
 #!/usr/bin/env node
 
+console.log(chalk.green(`DEEMIX CLI v1.1\n`));
+
 import chalk from 'chalk';
 import path from 'path';
 import fs from 'fs';
 import dz from 'deezer-js';
+import { fileURLToPath } from 'url';
+import { HttpsProxyAgent } from 'hpagent';
+import got from 'got';
+import {
+  bootstrap
+} from 'global-agent';
+
+bootstrap();
 
 import setup from './setup.js';
-
-import { fileURLToPath } from 'url';
 
 const dirName = fileURLToPath(import.meta.url).split('/src/index.js')[0];
 
@@ -37,10 +45,15 @@ if (args[0] === 'setup') {
   process.exit();
 }
 
+if (config.proxy) {
+  console.log(`${ chalk.green('i') } Applying proxy settings...`);
+  global.GLOBAL_AGENT.HTTP_PROXY = 'http://' + config.proxy.host + ':' + config.proxy.port
+}
+
 console.log(`${ chalk.green('i') } Logging in...`);
 await deezer.login_via_arl(config.arl);
 
-let ran = false
+let ran = false;
 
 for (const cmd of fs.readdirSync(dirName + '/src/commands')) {
   const module = (await import(dirName + '/src/commands/' + cmd)).default;
